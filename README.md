@@ -23,13 +23,13 @@ The CloudFormation template uses a custom resource, implemented via an AWS Lambd
 The CloudFormation template can then be customized to capture specific parameters and used to create an AWS Service Catalog product. 
 
 
-![Solution Overview](documentation/images/overviewarcsingle001.png)  
+![Solution Overview](documentation/images/ServicsingelerraformLab.png)  
 
 
 The Terraform files are placed in an Amazon Simple Storage Service (Amazon S3) bucket that can be accessed from AWS Service Catalog 
 in each of the spoke accounts. See the following figure.  
 
-![Solution Overview](documentation/images/overviewarcsingle002.png)  
+![Solution Overview](documentation/images/ServicCatalogandTerr.png)  
 
 Once the solution is deployed, end users in each spoke account can launch AWS Service Catalog products. 
 Information about which Terraform file to use, input parameters, and an IAM permission role is passed to the 
