@@ -23,19 +23,20 @@ The CloudFormation template uses a custom resource, implemented via an AWS Lambd
 The CloudFormation template can then be customized to capture specific parameters and used as a resource in an AWS Service Catalog product. 
 
 
-![Solution Overview](documentation/images/overviewarcsingle001.png)  
+![Solution Overview](documentation/images/ServicsingelerraformLab.png)  
 
 
 The Terraform files are placed in an Amazon Simple Storage Service (Amazon S3) bucket that can be accessed from AWS Service Catalog 
 in each of the spoke accounts. See the following figure.  
 
-![Solution Overview](documentation/images/overviewarcsingle002.png)  
+![Solution Overview](documentation/images/ServicCatalogandTerr.png)  
 
 
 ---
 ## Installation  
 
-It is assumed that the user has Full Access privileges in IAM for S3, CloudFormation, EC2, VPC, Lambda, and Service Catalog.
+Copy the Service Catalog Terraform components to a S3 bucket to be launched from CloudFormation.  
+It is assumed that the user has Administrative privileges in IAM for S3, CloudFormation, EC2, VPC, Lambda, and Service Catalog.
 
 - Clone the repository to your local computer
 
@@ -154,7 +155,7 @@ You now have all the files needed for launch in the S3 Bucket which has the same
 Service Catalog Console
 ![alt text](documentation/images/portsetup004.png)
 
-### Congratulations, You have completed setting up the Service Catalog Terraform Refrence Archticture components in a single account.
+### Congratulations, You have completed setting up the Service Catalog Terraform Reference Archticture components in a single account.
 
 
 ---

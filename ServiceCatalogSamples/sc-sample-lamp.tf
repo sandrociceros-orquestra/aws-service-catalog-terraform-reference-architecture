@@ -26,25 +26,16 @@ resource "random_id" "server_name_suffix" {
 
  
 resource "aws_instance" "web" {
- 
       connection {
-     
         user = "ec2-user"
-     
       }
-
       instance_type = "t2.micro"
       tags {
             Name = "webb_${random_id.server_name_suffix.hex}"
       }
-     
       ami = "${var.aws_ami}"
-     
       key_name = "${var.key_name}"
-     
       vpc_security_group_ids = ["${var.aws_sg}"]
-     
-     
       subnet_id = "${var.aws_subnet}"
 }
 

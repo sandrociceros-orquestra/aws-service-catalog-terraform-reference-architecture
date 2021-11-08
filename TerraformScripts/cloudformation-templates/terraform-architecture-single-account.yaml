@@ -54,8 +54,9 @@ Parameters:
                  Terraform-related S3 buckets. By default an S3 managed key is used.
   TerraformVersion:
     Type: String
-    Default: "0.12.17"
-    Description: The version of the terraform binary to use (ex. 0.12.17).
+    Default: ""
+    Description: (Optional) The version of the terraform binary to use (ex. 1.0.10). By default,
+                 the latest version will be used.
   WrapperScriptBucket:
     Type: String
     Default: ""
