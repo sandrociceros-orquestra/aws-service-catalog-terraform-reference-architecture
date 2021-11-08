@@ -207,7 +207,7 @@ You now have all the files needed for launch in the S3 Bucket which has the same
 Service Catalog Console
 ![alt text](documentation/images/portsetup004.png)
 
-### Congratulations, You have completed setting up the Service Catalog Terraform Refrence Archticture components in a single account.
+### Congratulations, You have completed setting up the Service Catalog Terraform Reference Archticture components in a single account.
 
  
 ---

@@ -60,7 +60,7 @@ Parameters:
   TerraformVersion:
     Type: String
     Default: ""
-    Description: (Optional) The version of the terraform binary to use (ex. 0.11.3). By default,
+    Description: (Optional) The version of the terraform binary to use (ex. 1.0.10). By default,
                  the latest version will be used.
   WrapperScriptBucket:
     Type: String
