@@ -112,15 +112,15 @@
       "Properties": {
         "Owner": "MP Team",
         "SupportDescription": "Support Description",
-        "Description": "S3 WebSite-TF",
+        "Description": "S3 bucket",
         "Distributor": "AWS MP Team Sample",
         "SupportEmail": "awsmp@example.com",
         "AcceptLanguage": "en",
         "SupportUrl": "https://support.com",
-        "Name": "S3 WebSite-TF",
+        "Name": "S3 bucket",
         "ProvisioningArtifactParameters": [
           {
-            "Description": "S3 WebSite-TF",
+            "Description": "S3 bucket",
             "Info": {
               "LoadTemplateFromURL": {
                 "Fn::Sub": ["https://${configurl}/sc-sample-S3.json",
