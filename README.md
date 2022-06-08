@@ -4,11 +4,11 @@
 
 **AWS Service Catalog and Terraform Terminology**  
 - hub or fulfillment account: The account where the Terraform server or engine will live. The terraform instance will receive 
-a templat path and parameters from the custom lambda which will then be executed by the Terraform binary.
+a template path and parameters from the custom lambda which will then be executed by the Terraform binary.
 - spoke account: The spoke accounts that will send Terraform file paths and parameters to the Terraform engine in the Hub account for execution.
 
 This solution requires that a Terraform server be deployed and available. It is possible to use an existing Terraform server though instructions are not included here.  
-To demonstrate the process we have supplied a standarized CloudFormation templates which 
+To demonstrate the process we have supplied a standardized CloudFormation templates which 
 creates a new Amazon Elastic Compute Cloud (Amazon EC2) instance and installs Terraform. 
 
 You can use one Terraform server to target resources across multiple AWS accounts. 
@@ -75,7 +75,7 @@ AWS CLI Install [Instructions](https://docs.aws.amazon.com/cli/latest/userguide/
      aws s3 sync ./ServiceCatalogSamples/ s3://scterraform-[YOUR-ACCOUNT-ID]/ServiceCatalogSamples/  
      aws s3 sync ./TerraformScripts/ s3://scterraform-[YOUR-ACCOUNT-ID]/TerraformScripts/  
     ```  
-
+Login to S3 console and make the folder TerraformScripts public so that the templates can be accessed from child accounts.
 
 You now have all the files needed for launch in the S3 Bucket which has the same file structure as this github repo:  
 
@@ -99,7 +99,7 @@ You now have all the files needed for launch in the S3 Bucket which has the same
  ### Installing the Service Catalog Terraform reference architecture into a single account hub account  
  
   1. Navigate to the S3 [console](https://console.aws.amazon.com/s3/).In the S3 Console, choose the **TerraformScripts/cloudformation-templates/terraform-architecture-single-account.yaml** file
-  2. Copy the URL
+  2. Copy the **Object URL**
   2. Navigate to the CloudFormation [console](https://console.aws.amazon.com/cloudformation/).
   3. Verify the region.
   4. Choose **Create Stack**.
@@ -124,7 +124,7 @@ You now have all the files needed for launch in the S3 Bucket which has the same
 ## Create AWS Service Catalog portfolio and product based on Terraform
  
 1. Navigate to the S3 [S3 console](https://console.aws.amazon.com/s3/).
-2. Choose the __**terraform-config-[YOUR-ACCOUNT-ID]**__ bucket
+2. Choose the __**terraformarchitecture-single-terraformconfigstore-xxxx **__ bucket
 3. Choose **Upload**
 4. Use the file explorer opened earlier to open the **ServiceCatalogSamples** folder
 5. Select and drag over the following files
@@ -133,9 +133,9 @@ You now have all the files needed for launch in the S3 Bucket which has the same
 - sc-sample-port-product-setup.json
 - sc-sample-S3.json
 - sc-sample-S3.tf
-6. Choose **Upload**
+6. Choose **Upload**. 
 7. In the S3 Console, choose the **sc-sample-port-product-setup.json** file
-8. Righ click and Copy the URL
+8. Click on it and copy the Object URL
 6.  Navigate to the **CloudFormation console** https://console.aws.amazon.com/cloudformation/
 7.  Verify the **region**. 
 8.  Choose **Create Stack**.
@@ -155,7 +155,7 @@ You now have all the files needed for launch in the S3 Bucket which has the same
 Service Catalog Console
 ![alt text](documentation/images/portsetup004.png)
 
-### Congratulations, You have completed setting up the Service Catalog Terraform Reference Archticture components in a single account.
+### Congratulations, You have completed setting up the Service Catalog Terraform Reference Architecture components in a single account.
 
 
 ---
@@ -170,19 +170,19 @@ Service Catalog Console
 
 **Note:** Make sure the **TerraformArchitecture-SingleAccount** CloudFormation stack has a status of CREATE_COMPLETE before proceeding.   
 
-1.  Sign in to the AWS Console using the spoke account.
-2.  Navigate to the CloudFormation console https://console.aws.amazon.com/cloudformation/
+1.  Sign in to the AWS Console using the **spoke account**.
+2.  Navigate to the **CloudFormation** console https://console.aws.amazon.com/cloudformation/
 3.  Verify the region. 
-4.  Choose Create Stack.
+4.  Choose **Create Stack**.
 5.  Under Choose a template, select Specify an Amazon S3 template URL.
 6.  Type the following URL  https://s3.amazonaws.com/scterraform-[YOUR-ACCOUNT-ID]/TerraformScripts/cloudformation-templates/terraform-spoke-principals.yaml
-7.  Choose Next.
-8.  For Stack name, type TerraformLaunchRole.
+7.  Choose **Next**.
+8.  For Stack name, type **TerraformLaunchRole**.
 9.  For Fulfillment Account ID, type the hub account ID.
 10. For FulfillmentRegion enter the region.
 11. Update the remaining parameters (optional).
-12. Choose Next.
-13. Choose Create to create the Terraform instance.
+12. Choose **Next**.
+13. Choose **Create stack**to create the Terraform instance.
 
 The Status changes to CREATE_COMPLETE once the stack is created.
 
@@ -206,6 +206,33 @@ https://console.aws.amazon.com/cloudformation/
 14. Choose **Create** to create the Terraform instance.
 
 The Status changes to CREATE_COMPLETE once the stack is created.
+
+## Deploy Service Catalog portfolio and products.
+
+For the test we will deploy the same SC portfolio and products in spoke account. To access the CFN templates from the spoke account, add required access policy on bucket. For this example, just make the files from the bucket __**terraformarchitecture-single-terraformconfigstore-xxxx**__ public. Go to S3 console of Hub account. Click on s3 bucket __**terraformarchitecture-single-terraformconfigstore-xxxx**__.  Select all the files and click on **Action** and the **Make public using ACL** so that spoke accounts can able to access them. 
+:warning: In your production environment you will setup secure cross account S3 access policy and must not make the templates public. 
+
+1. Navigate to the **CloudFormation console** https://console.aws.amazon.com/cloudformation/
+2. Verify the **region**. 
+3. Choose **Create Stack**.
+9. Under Choose a template, select *Specify an Amazon S3 template URL*.
+10. Copy the URL of json template **sc-sample-port-product-setup.json** from Hub account s3 bucket __**terraformarchitecture-single-terraformconfigstore-xxxx**__. Paste the URL you copied. 
+12.  For Stack name, type **SCTFportfoliosetup**.
+13.  For all the other parameters use the defaults. But for **TemplateConfigBucket** enter the S3 bucket full name which is similar to `terraformarchitecture-single-terraformconfigstore-xxxxx.s3.<s3-bucket-region>.amazonaws.com`
+14. Choose **Next**.
+15. Choose **Create Stack** to create the Service Catalog Sample Terraform Portfolio.
+
+## Change SNS topic access policy
+
+In order to publish the message on SNS topic `terraform-commands-topic` locate in Hub account from spoke account, you need to change the access policy of the SNS.
+1. Go to Hub account and SNS console.
+2. Search for SNS topic `terraform-commands-topic` and click on it.
+3. Choose **Edit** and the **Access policy**. Add the ARN of newly created IAM role in Spoke account. i.e. `TerraformLaunchLambdaRole`
+4. Click **Save changes**.
+
+Now from the Spoke account's Service Catalog console you can launch the deployed products (by providing user/role access to deployed portfolio).
+
+The above LambdaLaunch function, portfolio deployment steps needs to be repeated for each region.
 
 ---
 ## Using the AWS Service Catalog Terraform Reference Architecture with GitHub
