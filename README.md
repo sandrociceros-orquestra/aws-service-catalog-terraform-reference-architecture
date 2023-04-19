@@ -2,7 +2,10 @@
 
 ## Solution Overview
 
-<mark> The Service Catalog team recently introduced support for [Terraform open source](https://aws.amazon.com/about-aws/whats-new/2023/04/aws-service-catalog-terraform-open-source/) so we reccomend users to use this instead. This Sample will be deprecated in the future. More details on Service Catalog and Terraform open source can be found in the [documentation](https://docs.aws.amazon.com/servicecatalog/latest/adminguide/getstarted-Terraform.html). </mark>
+> **Note**
+>
+> The Service Catalog team recently introduced support for [Terraform open source](https://aws.amazon.com/about-aws/whats-new/2023/04/aws-service-catalog-terraform-open-source/) so we reccomend users to use this instead. This Sample will be deprecated in the future. More details on Service Catalog and Terraform open source can be found in the [documentation](https://docs.aws.amazon.com/servicecatalog/latest/adminguide/getstarted-Terraform.html).This project is currently being worked on behind the scenes. We're doing work to the `workshop` branch at the moment to convert it into something customers will enjoy participating in.
+>
 
 **AWS Service Catalog and Terraform Terminology**  
 - hub or fulfillment account: The account where the Terraform server or engine will live. The terraform instance will receive 
